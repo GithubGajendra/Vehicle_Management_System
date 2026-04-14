@@ -1,0 +1,117 @@
+body {
+    background-image: url('/static/images/bgpa.png');
+    background-size: cover;
+    background-position: center;
+}
+
+#main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#canvas {
+    background: whitesmoke;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 450px;
+    width: 100%;
+}
+
+#form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+#form p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+.fancy-text {
+    display: inline-block;
+    background: linear-gradient(90deg, #00ff37, #7873f5);
+    -webkit-background-clip: text;
+    color: transparent;
+    position: relative;
+    cursor: pointer;
+}
+
+.fancy-text .underline {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #7873f5;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.fancy-text:hover .underline {
+    transform: scaleX(1);
+}
+
+.btn {
+    border-radius: 20px;
+}
+
+
+#container {
+
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+
+}
+
+.choice-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.choice-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 300px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+
+.choice-card h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 15px;
+}
+
+.choice-card p {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+.choice-card .btn {
+    border-radius: 25px;
+}

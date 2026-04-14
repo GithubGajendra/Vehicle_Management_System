@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard | Vehicle Parking App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">User Dashboard</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Welcome, {{user.fullname}}</h2> <br>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show mt-2" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+
+        <div class="card mb-4 border-primary">
+            <div class="card-header bg-primary text-white">
+                Your Active Parking Spot
+            </div>
+            <div class="card-body">
+                {% if active_booking %}
+                <p><strong>Lot:</strong> {{ active_booking.spot.lot.name }}</p>
+                <p><strong>Spot ID:</strong> {{ active_booking.spot.id }}</p>
+                <p><strong>Parked At:</strong> {{ active_booking.start_time.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                <a href="{{ url_for('release_spot', booking_id=active_booking.id) }}" class="btn btn-danger">Release
+                    Spot</a>
+                {% else %}
+                <p>You have no active parking spot. Book one from the available lots below!</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if not active_booking %}
+        <h3>Available Parking Lots</h3>
+        {% for lot in available_lots %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ lot.name }}</h5>
+                <p class="card-text">{{ lot.address }}, {{ lot.pincode }}</p>
+                <p class="card-text"><strong>Price:</strong> ₹{{ lot.price|round(2) }}/hour</p>
+                <a href="{{ url_for('book_spot', lotid=lot.id) }}" class="btn btn-success">Occupy Spot</a>
+
+            </div>
+        </div>
+        {% else %}
+        <p>No other lots are available or you have an active booking.</p>
+        {% endfor %}
+        {% endif %}
+
+        <h3 class="mt-5">Your Parking History</h3>
+        <h3 class="mt-5">Your Parking History</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Lot Name</th>
+                    <th scope="col">Spot ID</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">End Time</th>
+                    <th scope="col">Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if past_bookings %}
+                {% for booking in past_bookings %}
+                <tr>
+                    <td>{{ booking.spot.lot.name }}</td>
+                    <td>{{ booking.spot.id }}</td>
+                    <td>{{ booking.start_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ booking.end_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>
+                        {% if booking.cost is not none %}
+                        ₹{{ booking.cost|round(2) }}
+                        {% else %}
+                        N/A
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="5">You have no past parking records.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+
+        </table>
+        <div class="card my-4">
+
+
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
